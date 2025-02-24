@@ -39,7 +39,7 @@ class Spaceship:
         self.has_fuel = True
     
     def __repr__(self):
-        return f"Welcome on board! You are on the {self.name} spaceship."
+        return f"Welcome on board! You are on the '{self.name}' spaceship."
       
     def add_fuel(self, amount):
         if self.storage + amount <= 3:
@@ -57,7 +57,14 @@ class Spaceship:
         else:
             print("You're out of storage")
 
-#Spaceship configuration
+#Spaceship random name configuration
+def spaceship_name_generator():
+  first_part = ["Silly", "Fat", "Rusty", "Slow", "Dirty", "Bouncing", "Melted", "Spoiled", "Drunk", "Rotten"]
+  second_part = ["Thunderstorm", "Dragon", "Lion", "Nova", "Galaxy", "Fireball", "Hero", "Discoverer", "Explorer", "Ninja"]
+  spaceship_name = first_part[random.randint(0, len(first_part))] + " " + second_part[random.randint(0, len(second_part))]
+  return spaceship_name
+
+#Spaceship fuel /storage configuration
 def spaceship_configuration(spaceship):
     while True:
         choice = input("Do you want to add fuel (f) or equipment (e) to the storage? (q to exit): ")
@@ -108,7 +115,8 @@ main_player.define_breathing()
 print(main_player)
 
 #defining spaceship
-test_spaceship = Spaceship("Zero Gravity")
+spaceship_random_name = spaceship_name_generator()
+test_spaceship = Spaceship(spaceship_random_name)
 spaceship_configuration(test_spaceship)
 print(test_spaceship)
 

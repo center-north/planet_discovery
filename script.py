@@ -6,8 +6,28 @@ class Player:
     def __init__(self, name, r_sys):
         self.name = name
         self.r_sys = r_sys
+        
     def __repr__(self):
         return f"Your name is {self.name} and your respiratory system is {self.r_sys} based."
+    
+    def define_breathing(self):
+        while True:
+          try:
+            self.chose_r_sys = int(input("""Tell me about your respiratory system. 
+            Type '1' if you breathe oxygen, type '2' if you breathe ammonia
+            """))
+            if self.chose_r_sys == 1:
+              self.r_sys = "oxygen"
+              break
+            elif self.chose_r_sys == 2:
+              self.r_sys = "ammonia"
+              break
+            else:
+              print("Your input is not valid. Type 1 for oxygen, 2 for ammonia.")
+          except ValueError:
+            print("Invalid input. Please enter a number.")
+
+    #da implementare un po' di logica... domani
     
 
 #Spaceship        
@@ -28,16 +48,32 @@ class Planet:
     def __init__(self, name):
         self.name = name
         self.distance = 0
-        self.atmosphere = atmosphere
-        self.temperature = temperature
-        self.gravity = gravity
+        self.atmosphere = "oxygen"
+        self.hospitable = True
+        self.gravity = 0
+    
+    def __repr__(self):
+        return f"Planet '{self.name}' spotted."
         
+#Introduction
+introduction = """Welcome astronaut.
+You are now on your way to discover a new planet.
+Are you ready for this journey?
+"""
+print(introduction)
 
-
-#defining player: definire la variabile input per name respiratorio e le due variabili per sist. resp. poi inserirle nell'oggetto player
-test_player = Player("a", "b")  
-print(test_player)
+#PLAYER
+#defining player: defining respiratory system and name of the player
+player_name = input("""First of all, introduce yourself.
+what is your name?
+""")
+main_player = Player(player_name, "b")  
+print(main_player)
 
 #defining spaceship
 test_spaceship = Spaceship("Test")
 print(test_spaceship)
+
+#defining planet
+test_planet = Planet("test planet")
+print(test_planet)

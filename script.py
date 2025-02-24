@@ -27,7 +27,7 @@ class Player:
           except ValueError:
             print("Invalid input. Please enter a number.")
 
-    #da implementare un po' di logica... domani
+    #da implementare un po' di logica... domani - valutare rimozione del blocco else
     
 
 #Spaceship        
@@ -67,7 +67,9 @@ print(introduction)
 player_name = input("""First of all, introduce yourself.
 what is your name?
 """)
-main_player = Player(player_name, "b")  
+
+main_player = Player(player_name, "")
+main_player.define_breathing()
 print(main_player)
 
 #defining spaceship

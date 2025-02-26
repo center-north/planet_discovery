@@ -56,12 +56,13 @@ class Spaceship:
             print(f"Added {amount} units of equipment. Total equipment: {self.equipment}")
         else:
             print("You're out of storage")
+            
 
-#Spaceship random name configuration
+#Spaceship random name generator
 def spaceship_name_generator():
   first_part = ["Silly", "Fat", "Rusty", "Slow", "Dirty", "Bouncing", "Melted", "Spoiled", "Drunk", "Rotten"]
   second_part = ["Thunderstorm", "Dragon", "Lion", "Nova", "Galaxy", "Fireball", "Hero", "Discoverer", "Explorer", "Ninja"]
-  spaceship_name = first_part[random.randint(0, len(first_part))] + " " + second_part[random.randint(0, len(second_part))]
+  spaceship_name = first_part[random.randint(0, len(first_part)-1)] + " " + second_part[random.randint(0, len(second_part)-1)]
   return spaceship_name
 
 #Spaceship fuel /storage configuration
@@ -90,13 +91,58 @@ def spaceship_configuration(spaceship):
 class Planet:
     def __init__(self, name):
         self.name = name
-        self.distance = 0
-        self.atmosphere = "oxygen"
+        self.atmosphere = ""
         self.hospitable = True
         self.gravity = 0
     
     def __repr__(self):
         return f"Planet '{self.name}' spotted."
+    
+   #random planet constructor
+    def planet_atmosphere_builder(self):
+        self.atm_composition = random.randint(1, 2)
+        if self.atm_composition == 1:
+            self.atmosphere = "oxygen"
+        else:
+            self.atmosphere = "ammonia"
+        return self.atmosphere
+            
+    def planet_is_hospitable(self):
+        self.hospitality = random.randint(1, 2)
+        if self.hospitality == 1:
+            self.hospitable = True
+        else:
+            self.hospitable = False
+        return self.hospitable
+    
+    def planet_gravity_builder(self):
+        self.set_gravity = random.randint(1, 2)
+        if self.set_gravity == 1:
+            self.gravity = 1
+        else:
+            self.gravity = 2
+        return self.gravity
+
+#planet random name generator
+def planet_name_generator():
+  first_part = ["XY", "Random", "Asteroid", "Massive", "Rock", "Star", "Giant", "Outer", "Small", "Flashing"]
+  second_part = ["99", "67-67", "199", "5", "974", "12345", "0001", "737", "0-7-2", "Alpha"]
+  planet_name = first_part[random.randint(0, len(first_part)-1)] + "-" + second_part[random.randint(0, len(second_part)-1)]
+  return planet_name
+
+
+#function lander 
+# def spaceship_lander(planet_name, livability, fuel):
+#     print(f"{planet_name} spotted. Livability level seems {livability}")
+#     decision = input("""Type 'y' if you want to land or 'n' if you want to continue to another planet
+#           IMPORTANT: if you decide to continue you will use 1 unit of fuel.""")
+#     while True:
+#         if decision.lower() == "y":
+#             break
+#         elif decision.lower == "n":
+#             spaceship_lander()
+#         else:
+#             print("Invalid input, try again")
         
 #Introduction
 introduction = """Welcome astronaut.
@@ -105,7 +151,7 @@ Are you ready for this journey?
 """
 print(introduction)
 
-#PLAYER
+#PLAYER 
 #defining player: defining respiratory system and name of the player
 player_name = input("""First of all, introduce yourself.
 what is your name?
@@ -114,12 +160,26 @@ main_player = Player(player_name, "")
 main_player.define_breathing()
 print(main_player)
 
+#SPACESHIP
 #defining spaceship
 spaceship_random_name = spaceship_name_generator()
 test_spaceship = Spaceship(spaceship_random_name)
 spaceship_configuration(test_spaceship)
 print(test_spaceship)
 
-#defining planet
-test_planet = Planet("test planet")
-print(test_planet)
+#getting ready to the voyage... starting the engine
+print(f"{main_player.name}, you are now ready to go. {spaceship_random_name} has {test_spaceship.fuel}/3 units of fuel and {test_spaceship.equipment}/3 units of equipment")
+while True:
+    user_input = input("Are you ready? Press 'y' to start the engine: ")
+    if user_input.lower() == "y":
+        break
+    else:
+        print("Invalid input! press 'y' to continue")
+
+#PLANET
+#defining planet -- still a test for now
+test_planet = Planet(planet_name_generator())
+print(test_planet.planet_atmosphere_builder())
+print(test_planet.planet_is_hospitable())
+print(test_planet.planet_gravity_builder())
+print(test_planet.name)

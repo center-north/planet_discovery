@@ -131,33 +131,48 @@ def planet_name_generator():
   return planet_name
 
 #function lander 
-def spaceship_lander(planet_name, fuel): #aggiungere il controllo per fuel <0!
-    fuel -= 1
+def spaceship_lander(planet_name, spaceship): #aggiungere il controllo per fuel <0!
+    spaceship.fuel -= 1
     print(f"Planet {planet_name} spotted!")
     while True:
         landing_button = input("Press 'a' key to land!")
         if landing_button.lower() == "a":
-            return f"Landed! Your amount of fuel is now {fuel} units!"
+            print(f"Landed! Your amount of fuel is now {spaceship.fuel} units!")
             break #insert check planet function here? to decide
         else:
             print("Invalid key! Press 'a' key to land")
     return landing_button
 
+
 #liveability checker
-def check_planet_livability(hosp, grav):
+def check_planet_liveability(hosp, grav):
     estimated_liveability = ""
     if hosp == True and grav == 1:
         estimated_liveability = "high"
     elif hosp == True and grav == 2:
-            estimated_liveability = "medium"
+        estimated_liveability = "medium"
     elif hosp == False and grav == 1:
-            estimated_liveability = "medium"
+        estimated_liveability = "medium"
     elif hosp == False and grav == 2:
-            estimated_liveability = "low"
+        estimated_liveability = "low"
     else:
         print("Something went wrong")
     return estimated_liveability
     
+    #planet switcher
+def planet_switcher(liveability_score):
+    print(f"At the first sight, the liveability of this planet seems {liveability_score}")
+    while True:
+        final_decision = input("""Do you want to land or move to another planet?
+                               NOTE: by continuing to another planet you will consume 1 unit of fuel.
+                               Press 'c' to continue or 's' to land.""")
+        if final_decision.lower() == "s":
+            break
+        elif final_decision.lower() == "c":
+            spaceship_lander(planet_name, test_spaceship)
+        else: 
+            print("Invalid input. Please try again.")
+            
         
 #Introduction
 introduction = """Welcome astronaut.
@@ -191,16 +206,23 @@ while True:
     else:
         print("Invalid input! press 'y' to continue")
 
-#PLANET
-#landing on your planet -- still a test for now
+#PLANET 
+#defining planet
 test_planet = Planet(planet_name_generator())
 planet_name = test_planet.name
-fuel_amount = test_spaceship.fuel
-spaceship_lander(planet_name, fuel_amount)
+liveability_checker = check_planet_liveability(test_planet.planet_is_hospitable(), test_planet.planet_gravity_builder())
+
+#planet lander
+spaceship_lander(planet_name, test_spaceship)
+
+#checking if the planet is good or not. if it is good land, if not go away
+planet_switcher(liveability_checker)
 
 
+
+#just to check if everything works---temporary
 print(test_planet.planet_atmosphere_builder())
 print(test_planet.planet_is_hospitable())
 print(test_planet.planet_gravity_builder())
 print(test_planet.name)
-print(check_planet_livability(test_planet.hospitable, test_planet.gravity))
+print(liveability_checker)

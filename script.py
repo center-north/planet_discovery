@@ -130,19 +130,34 @@ def planet_name_generator():
   planet_name = first_part[random.randint(0, len(first_part)-1)] + "-" + second_part[random.randint(0, len(second_part)-1)]
   return planet_name
 
-
 #function lander 
-# def spaceship_lander(planet_name, livability, fuel):
-#     print(f"{planet_name} spotted. Livability level seems {livability}")
-#     decision = input("""Type 'y' if you want to land or 'n' if you want to continue to another planet
-#           IMPORTANT: if you decide to continue you will use 1 unit of fuel.""")
-#     while True:
-#         if decision.lower() == "y":
-#             break
-#         elif decision.lower == "n":
-#             spaceship_lander()
-#         else:
-#             print("Invalid input, try again")
+def spaceship_lander(planet_name, fuel): #aggiungere il controllo per fuel <0!
+    fuel -= 1
+    print(f"Planet {planet_name} spotted!")
+    while True:
+        landing_button = input("Press 'a' key to land!")
+        if landing_button.lower() == "a":
+            return f"Landed! Your amount of fuel is now {fuel} units!"
+            break #insert check planet function here? to decide
+        else:
+            print("Invalid key! Press 'a' key to land")
+    return landing_button
+
+#liveability checker
+def check_planet_livability(hosp, grav):
+    estimated_liveability = ""
+    if hosp == True and grav == 1:
+        estimated_liveability = "high"
+    elif hosp == True and grav == 2:
+            estimated_liveability = "medium"
+    elif hosp == False and grav == 1:
+            estimated_liveability = "medium"
+    elif hosp == False and grav == 2:
+            estimated_liveability = "low"
+    else:
+        print("Something went wrong")
+    return estimated_liveability
+    
         
 #Introduction
 introduction = """Welcome astronaut.
@@ -177,9 +192,15 @@ while True:
         print("Invalid input! press 'y' to continue")
 
 #PLANET
-#defining planet -- still a test for now
+#landing on your planet -- still a test for now
 test_planet = Planet(planet_name_generator())
+planet_name = test_planet.name
+fuel_amount = test_spaceship.fuel
+spaceship_lander(planet_name, fuel_amount)
+
+
 print(test_planet.planet_atmosphere_builder())
 print(test_planet.planet_is_hospitable())
 print(test_planet.planet_gravity_builder())
 print(test_planet.name)
+print(check_planet_livability(test_planet.hospitable, test_planet.gravity))

@@ -132,6 +132,9 @@ def planet_name_generator():
 
 #function lander 
 def spaceship_lander(planet_name, spaceship): #aggiungere il controllo per fuel <0!
+    if spaceship.fuel <= 0:
+        print("You're out of fuel! Game over.")
+        return False #game over
     spaceship.fuel -= 1
     print(f"Planet {planet_name} spotted!")
     while True:
@@ -160,20 +163,49 @@ def check_planet_liveability(hosp, grav):
     return estimated_liveability
     
     #planet switcher
-def planet_switcher(liveability_score):
+def planet_switcher(liveability_score, test_spaceship):
     print(f"At the first sight, the liveability of this planet seems {liveability_score}")
     while True:
         final_decision = input("""Do you want to land or move to another planet?
                                NOTE: by continuing to another planet you will consume 1 unit of fuel.
                                Press 'c' to continue or 's' to land.""")
         if final_decision.lower() == "s":
-            break
+            winner_checker = winner_or_loser(main_player, test_spaceship, test_planet)
+            if winner_checker:
+                print("Congratulations! You colonised the planet!")
+            else:
+                print("Sorry, you're dead!")
+            return False #end the game
         elif final_decision.lower() == "c":
-            spaceship_lander(planet_name, test_spaceship)
+            return True #continue to next planet
         else: 
             print("Invalid input. Please try again.")
             
-        
+#winner or loser check
+def winner_or_loser(player, spaceship, planet):
+    planet_score = 0
+    player_score = 0
+    result = True
+    if player.r_sys == planet.atmosphere:
+        player_score += 1
+    else:
+        planet_score += 1
+    if planet.hospitable == True:
+        player_score += 1
+    else:
+        planet_score += 1
+    if planet.gravity == 1:
+        player_score += 1
+    else:
+        planet_score += 1
+    player_score += spaceship.equipment 
+    if player_score > planet_score:
+        result = True
+    else: 
+        result = False
+    return result
+    
+
 #Introduction
 introduction = """Welcome astronaut.
 You are now on your way to discover a new planet.
@@ -213,16 +245,33 @@ planet_name = test_planet.name
 liveability_checker = check_planet_liveability(test_planet.planet_is_hospitable(), test_planet.planet_gravity_builder())
 
 #planet lander
-spaceship_lander(planet_name, test_spaceship)
+if spaceship_lander(planet_name, test_spaceship) == False:
+    exit()
 
-#checking if the planet is good or not. if it is good land, if not go away
-planet_switcher(liveability_checker)
+# checking if the planet is good or not. if it is good land, if not go away
+while True:
+    if planet_switcher(liveability_checker, test_spaceship) == False:
+        exit()
+
+    # Generate a new planet for the next iteration
+    test_planet = Planet(planet_name_generator())
+    planet_name = test_planet.name
+    liveability_checker = check_planet_liveability(test_planet.planet_is_hospitable(), test_planet.planet_gravity_builder())
+
+    #planet lander
+    if spaceship_lander(planet_name, test_spaceship) == False:
+        exit()
+
+    # Aggiungi questa linea per interrompere il ciclo dopo l'atterraggio
+    # break
+#determine winner / loser  
+winner_checker = winner_or_loser(main_player, test_spaceship, test_planet)
+print(winner_checker)
 
 
-
-#just to check if everything works---temporary
-print(test_planet.planet_atmosphere_builder())
-print(test_planet.planet_is_hospitable())
-print(test_planet.planet_gravity_builder())
-print(test_planet.name)
-print(liveability_checker)
+# #just to check if everything works---temporary
+# print(test_planet.planet_atmosphere_builder())
+# print(test_planet.planet_is_hospitable())
+# print(test_planet.planet_gravity_builder())
+# print(test_planet.name)
+# print(liveability_checker)

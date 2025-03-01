@@ -173,7 +173,7 @@ def planet_switcher(liveability_score, test_spaceship):
             
 #winner or loser check
 def winner_or_loser(player, spaceship, planet):
-    planet_score = 1
+    planet_score = 0
     player_score = 0
     result = True
     if player.r_sys == planet.atmosphere:

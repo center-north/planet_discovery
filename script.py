@@ -27,7 +27,6 @@ class Player:
           except ValueError:
             print("Invalid input. Please enter a number.")
     
-
 #Spaceship        
 class Spaceship:
     def __init__(self, name):
@@ -37,10 +36,8 @@ class Spaceship:
         self.equipment = 0
         self.has_storage = True
         self.has_fuel = True
-    
     def __repr__(self):
         return f"Welcome on board! You are on the '{self.name}' spaceship."
-      
     def add_fuel(self, amount):
         if self.storage + amount <= 3:
             self.fuel += amount
@@ -48,7 +45,6 @@ class Spaceship:
             print(f"Added {amount} units of fuel. Total fuel: {self.fuel}/3")
         else:
             print("You're out of storage")
-
     def add_equipment(self, amount):
         if self.storage + amount <= 3:
             self.equipment += amount
@@ -57,7 +53,6 @@ class Spaceship:
         else:
             print("You're out of storage")
             
-
 #Spaceship random name generator
 def spaceship_name_generator():
   first_part = ["Silly", "Fat", "Rusty", "Slow", "Dirty", "Bouncing", "Melted", "Spoiled", "Drunk", "Rotten"]
@@ -85,7 +80,6 @@ def spaceship_configuration(spaceship):
             break
         else:
             print("Scelta non valida.")
-      
 
 #Planet
 class Planet:
@@ -93,11 +87,9 @@ class Planet:
         self.name = name
         self.atmosphere = ""
         self.hospitable = True
-        self.gravity = 0
-    
+        self.gravity = 0 
     def __repr__(self):
         return f"Planet '{self.name}' spotted."
-    
    #random planet constructor
     def planet_atmosphere_builder(self):
         self.atm_composition = random.randint(1, 2)
@@ -105,8 +97,7 @@ class Planet:
             self.atmosphere = "oxygen"
         else:
             self.atmosphere = "ammonia"
-        return self.atmosphere
-            
+        return self.atmosphere     
     def planet_is_hospitable(self):
         self.hospitality = random.randint(1, 2)
         if self.hospitality == 1:
@@ -114,7 +105,6 @@ class Planet:
         else:
             self.hospitable = False
         return self.hospitable
-    
     def planet_gravity_builder(self):
         self.set_gravity = random.randint(1, 2)
         if self.set_gravity == 1:
@@ -205,7 +195,6 @@ def winner_or_loser(player, spaceship, planet):
         result = False
     return result
     
-
 #Introduction
 introduction = """Welcome astronaut.
 You are now on your way to discover a new planet.
@@ -253,7 +242,7 @@ while True:
     if planet_switcher(liveability_checker, test_spaceship) == False:
         exit()
 
-    # Generate a new planet for the next iteration
+# generating a new planet for the next iteration
     test_planet = Planet(planet_name_generator())
     planet_name = test_planet.name
     liveability_checker = check_planet_liveability(test_planet.planet_is_hospitable(), test_planet.planet_gravity_builder())
@@ -262,16 +251,6 @@ while True:
     if spaceship_lander(planet_name, test_spaceship) == False:
         exit()
 
-    # Aggiungi questa linea per interrompere il ciclo dopo l'atterraggio
-    # break
 #determine winner / loser  
 winner_checker = winner_or_loser(main_player, test_spaceship, test_planet)
 print(winner_checker)
-
-
-# #just to check if everything works---temporary
-# print(test_planet.planet_atmosphere_builder())
-# print(test_planet.planet_is_hospitable())
-# print(test_planet.planet_gravity_builder())
-# print(test_planet.name)
-# print(liveability_checker)
